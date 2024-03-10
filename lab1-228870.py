@@ -76,7 +76,7 @@ print(wyciecie(arr))
 
 img = io.imread("input1/lena.png")
 gray = color.rgb2gray(img)
-plt.imshow(gray)
+plt.imshow(gray, cmap='gray')
 plt.show()
 
 crop = np.ones((640, 480))
