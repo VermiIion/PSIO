@@ -64,3 +64,56 @@ axes[2].set_title("Processed 2")
 axes[2].axis("off")
 
 plt.show()
+
+#3
+image = skimage.io.imread("blood_smear.jpg")
+image = skimage.color.rgb2gray(image)
+
+fig, axes = plt.subplots(1, 4, figsize=(10, 10))
+
+threshold1 = 0.45
+threshold2 = 0.9
+
+image2 = (image > threshold1).astype(int)
+image3 = (image > threshold2).astype(int)
+combined_image = 2 * image3 + 1 * image2
+
+axes[0].imshow(image, cmap="gray")
+axes[0].axis("off")
+
+axes[1].imshow(image2, cmap="gray")
+axes[1].axis("off")
+
+axes[2].imshow(image3, cmap="gray")
+axes[2].axis("off")
+
+axes[3].imshow(
+    combined_image,
+    cmap=plt.cm.colors.ListedColormap(["blue", "red", "white"]),
+    vmin=0,
+    vmax=2,
+)
+axes[3].axis("off")
+
+plt.show()
+
+#4
+image = skimage.io.imread("airbus.png")
+background = image[:100, :100]
+background_avg = np.average(background)
+max_distance = 0
+
+for row in background:
+    for pixels in row:
+        distance = np.linalg.norm(pixels - background_avg)
+        max_distance = max(max_distance, distance)
+
+mask = np.zeros(image.shape[:2])
+for i, row in enumerate(image):
+    for j, pixels in enumerate(row):
+        distance = np.linalg.norm(pixels - background_avg)
+        mask[i, j] = 1 if distance > max_distance else 0
+
+plt.imshow(mask, cmap="gray")
+
+plt.show()
