@@ -3,7 +3,6 @@ import numpy as np
 import skimage
 
 
-#def zad1():
 image = skimage.io.imread("brain_tumor.png")
 image = skimage.color.rgb2gray(image)
 
